@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace GraphBuilder
 {
-    public partial class OpenFileDialog : Form
+    public partial class OpenFileDialogSingle : Form
     {
-        public OpenFileDialog()
+        public OpenFileDialogSingle()
         {
             InitializeComponent();
         }
@@ -26,21 +26,8 @@ namespace GraphBuilder
                 return;
             }
             labelControl1.Text = openFileDialog1.FileName;
-            char[] file;
-            StringBuilder builder = new StringBuilder();
-
-            using (StreamReader reader = File.OpenText(openFileDialog1.FileName))
-            {
-                file = new char[reader.BaseStream.Length];
-                await reader.ReadAsync(file, 0, (int)reader.BaseStream.Length);
-            }
-
-            foreach (char c in file)
-            {
-                builder.Append(c);
-            }
-            var array = builder.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(i => Convert.ToDouble(i)).ToArray();
-            Data = array;
+            
+            Data = await OpenHelper.ReadFile(openFileDialog1.FileName);
         }
         double[] fData;
         public double[] Data

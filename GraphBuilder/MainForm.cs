@@ -1,5 +1,4 @@
-﻿using GraphBuilder.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ZedGraph;
 
 namespace GraphBuilder
 {
@@ -18,29 +16,15 @@ namespace GraphBuilder
         {
             InitializeComponent();
         }
-        public void AddCurve(double[] source, double precision, string name, Color color)
+
+        private void simpleButton1_Click(object sender, EventArgs e)
         {
-            var data = MyMath.AggregateData(source, precision);
-            GraphPane pane = zedGraphControl.GraphPane;
-            LineItem curve = pane.AddCurve(
-                name,
-                data.Select(p => Convert.ToDouble(p.X)).ToArray(),
-                data.Select(p => Convert.ToDouble(p.Y)).ToArray(),
-                color,
-                SymbolType.None
-            );
-            zedGraphControl.AxisChange();
+            new SingleForm().Show();
         }
 
-        private void barButtonItem1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void simpleButton2_Click(object sender, EventArgs e)
         {
-            var dialog = new OpenFileDialog();
-            var result = dialog.ShowDialog(this);
-            if (result != DialogResult.OK)
-            {
-                return;
-            }
-            AddCurve(dialog.Data, dialog.Precision, dialog.CurveName, dialog.CurveColor);
+            new SeriesForm().Show();
         }
     }
 }

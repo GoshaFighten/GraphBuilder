@@ -136,5 +136,19 @@ namespace Tests
             var precision = 10;
             CollectionAssert.AreEqual(expectation, MyMath.AggregateData(source, precision));
         }
+
+        [TestMethod]
+        public void EnsureSorting()
+        {
+            var source = new double[] { 100, 107, 113, 104, 104 };
+            var expectation = new MyPoint[] {
+                new MyPoint(100, 0.2),
+                new MyPoint(104, 0.4),
+                new MyPoint(107, 0.2),
+                new MyPoint(113, 0.2)
+            };
+            var precision = 1;
+            CollectionAssert.AreEqual(expectation, MyMath.AggregateData(source, precision));
+        }
     }
 }
