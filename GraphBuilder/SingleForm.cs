@@ -50,15 +50,10 @@ namespace GraphBuilder
             AddCurve(zedGraphControl1, MyMath.GetNormalDistributionGraphData(data), "F(normal)", Color.Blue);
             MyPoint[] FData = MyMath.GetFGraph(data);
             AddCurve(zedGraphControl1, FData, "F", Color.Green);
-            var d = MyMath.CalcD(data);
-            MyPoint[] fDDataMin = MyPoint.GetMinusGraph(FData, d);
-            MyPoint[] fDDdataMax = MyPoint.GetPlusGraph(FData, d);
-            AddCurve(zedGraphControl1, fDDataMin, "D-", Color.Red);            
-            AddCurve(zedGraphControl1, fDDdataMax, "D+", Color.Red);
-            var dMaxGraph = MyMath.GetAllowedFMaxGraph(FData, d, 0.05);
-            AddCurve(zedGraphControl1, dMaxGraph, "Allowed+", Color.Black);
-            var dMinGraph = MyMath.GetAllowedFMinGraph(FData, d, 0.05);
-            AddCurve(zedGraphControl1, dMinGraph, "Allowed-", Color.Black);
+
+            var result = MyMath.GetNormalDistributionProbability(data, 0.05);
+            barStaticItem2.Caption = "Dmax: " + result.Item1;
+            barStaticItem3.Caption = "Dn: " + result.Item2;
         }
     }
 }

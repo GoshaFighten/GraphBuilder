@@ -43,18 +43,52 @@ namespace GraphBuilder {
             return result;
         }
 
-        public static MyPoint[] WindowTest(double[] data, int window) {
+        public static Dictionary<int, double> GetMinusDs(double[] data, NormalDistribution distribution) {
+            var sortedData = data.OrderBy(x => x).ToArray();
+            var result = new Dictionary<int, double>();
+            for (int i = 0; i < sortedData.Length; i++) {
+                var m = i + 1;
+                result.Add(m, distribution.LeftProbability(sortedData[i]) - ((double)m - 1.0) / sortedData.Length);
+            }
+            return result;
+        }
+
+        public static Dictionary<int, double> GetPlusDs(double[] data, Distribution distribution) {
+            var sortedData = data.OrderBy(x => x).ToArray();
+            var result = new Dictionary<int, double>();
+            for (int i = 0; i < sortedData.Length; i++) {
+                var m = i + 1;
+                result.Add(m, ((double)m) / sortedData.Length - distribution.LeftProbability(sortedData[i]));
+            }
+            return result;
+        }
+
+        private static double GetMaxD(double[] data, NormalDistribution distribution) {
+            var plusDs = GetPlusDs(data, distribution);
+            var minusDs = GetMinusDs(data, distribution);
+            var maxD = Math.Max(plusDs.Select(d => d.Value).Max(), minusDs.Select(d => d.Value).Max());
+            return maxD;
+        }
+
+        public static double GetDn(double alpha, int n) {
+            var y = -Math.Log(alpha);
+            return Math.Pow(y / (2 * n), 0.5) - 1 / (6 * n);
+        }
+
+        public static Tuple<double, double> GetNormalDistributionProbability(double[] data, double alpha) {
+            var distribution = GetNormalDistribution(data);
+            var maxD = GetMaxD(data, distribution);
+            var dn = GetDn(alpha, data.Length);
+            return Tuple.Create(maxD, dn);
+        }
+
+        public static MyPoint[] WindowTestMyLogic(double[] data, int window) {
             if (window % 2 != 1) {
                 window++;
             }
             var result = new MyPoint[data.Length - window + 1];
             for (int i = window / 2; i < data.Length - window / 2; i++) {
-                var windowData = new double[window];
-                for (int j = 0; j < window; j++) {
-                    var x = i + j - window / 2;
-                    var value = data[x];
-                    windowData[j] = value;
-                }
+                var windowData = GetWindowData(data, window, i);
                 var fitResult = NormalDistribution.FitToSample(new Sample(windowData));
                 var point = new MyPoint(i, fitResult.GoodnessOfFit.Probability);
                 result[i - window / 2] = point;
@@ -62,43 +96,45 @@ namespace GraphBuilder {
             return result;
         }
 
-        public static MyPoint[] GetAllowedFMaxGraph(MyPoint[] fData, double d, double alpha) {
-            return MyPoint.GetPlusKGraph(fData, d, alpha);
-        }
-
-        public static MyPoint[] GetAllowedFMinGraph(MyPoint[] fData, double d, double alpha) {
-            return MyPoint.GetMinusKGraph(fData, d, alpha);
-        }
-
-        public static double CalcD(double[] data) {
-            var distributionTarget = GetNormalDistribution(data);
-            var distributionSource = GetF(data);
-            var d = double.MinValue;
-            foreach (var val in data) {
-                var newD = Math.Abs(distributionTarget.LeftProbability(val) - distributionSource[val]);
-                if (newD > d) {
-                    d = newD;
-                }
+        public static Tuple<MyPoint[], MyPoint[]> WindowTestNewLogic(double[] data, int window) {
+            if (window % 2 != 1) {
+                window++;
             }
-            return d * Math.Sqrt(data.Length);
+            var result1 = new MyPoint[data.Length - window + 1];
+            var result2 = new MyPoint[data.Length - window + 1];
+            for (int i = window / 2; i < data.Length - window / 2; i++) {
+                double[] windowData = GetWindowData(data, window, i);
+                var result = GetNormalDistributionProbability(windowData, 0.05);
+                var point1 = new MyPoint(i, result.Item1);
+                result1[i - window / 2] = point1;
+                var point2 = new MyPoint(i, result.Item2);
+                result2[i - window / 2] = point2;
+            }
+            return Tuple.Create(result1, result2);
+        }
+
+        private static double[] GetWindowData(double[] data, int window, int i) {
+            var windowData = new double[window];
+            for (int j = 0; j < window; j++) {
+                var x = i + j - window / 2;
+                var value = data[x];
+                windowData[j] = value;
+            }
+
+            return windowData;
         }
 
         public static Dictionary<double, double> GetF(double[] data) {
-            var temp = new Dictionary<double, double>();
-            foreach (var val in data) {
-                if (temp.ContainsKey(val)) {
-                    temp[val] = val;
-                } else {
-                    temp.Add(val, val);
-                }
-            }
-            double y = 0;
-            var sortedData = temp.OrderBy(kvp => kvp.Value);
-            var sum = sortedData.Sum(kvp => kvp.Value);
+            var sortedData = data.OrderBy(x => x).ToArray();
             var result = new Dictionary<double, double>();
-            foreach (var kvp in sortedData) {
-                y += kvp.Key;
-                result.Add(kvp.Key, y / sum);
+            for (int i = 0; i < sortedData.Length; i++) {
+                var x = sortedData[i];
+                var f = ((double)i + 1) / sortedData.Length;
+                if (result.ContainsKey(x)) {
+                    result[x] = f;
+                } else {
+                    result.Add(x, f);
+                }
             }
             return result;
         }

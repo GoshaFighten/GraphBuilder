@@ -43,10 +43,12 @@
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
+            this.barStaticItem3 = new DevExpress.XtraBars.BarStaticItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -57,8 +59,8 @@
             // 
             // zedGraphControl
             // 
-            this.zedGraphControl.Location = new System.Drawing.Point(16, 16);
-            this.zedGraphControl.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.zedGraphControl.Location = new System.Drawing.Point(12, 12);
+            this.zedGraphControl.Margin = new System.Windows.Forms.Padding(5);
             this.zedGraphControl.Name = "zedGraphControl";
             this.zedGraphControl.ScrollGrace = 0D;
             this.zedGraphControl.ScrollMaxX = 0D;
@@ -67,7 +69,7 @@
             this.zedGraphControl.ScrollMinX = 0D;
             this.zedGraphControl.ScrollMinY = 0D;
             this.zedGraphControl.ScrollMinY2 = 0D;
-            this.zedGraphControl.Size = new System.Drawing.Size(1035, 222);
+            this.zedGraphControl.Size = new System.Drawing.Size(1043, 229);
             this.zedGraphControl.TabIndex = 0;
             // 
             // barManager1
@@ -82,8 +84,10 @@
             this.barManager1.Form = this;
             this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.barButtonItem1,
-            this.barStaticItem1});
-            this.barManager1.MaxItemId = 2;
+            this.barStaticItem1,
+            this.barStaticItem2,
+            this.barStaticItem3});
+            this.barManager1.MaxItemId = 4;
             this.barManager1.StatusBar = this.bar2;
             // 
             // bar1
@@ -111,7 +115,9 @@
             this.bar2.DockRow = 0;
             this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
             this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem1)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem2),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem3)});
             this.bar2.OptionsBar.AllowQuickCustomization = false;
             this.bar2.OptionsBar.DrawDragBorder = false;
             this.bar2.OptionsBar.UseWholeRow = true;
@@ -129,47 +135,62 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.barDockControlTop.Size = new System.Drawing.Size(1067, 38);
+            this.barDockControlTop.Margin = new System.Windows.Forms.Padding(4);
+            this.barDockControlTop.Size = new System.Drawing.Size(1067, 36);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 520);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 523);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.barDockControlBottom.Size = new System.Drawing.Size(1067, 34);
+            this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(4);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1067, 31);
             // 
             // barDockControlLeft
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 38);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 36);
             this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 482);
+            this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(4);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 487);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1067, 38);
+            this.barDockControlRight.Location = new System.Drawing.Point(1067, 36);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 482);
+            this.barDockControlRight.Margin = new System.Windows.Forms.Padding(4);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 487);
             // 
             // layoutControl1
             // 
             this.layoutControl1.Controls.Add(this.zedGraphControl1);
             this.layoutControl1.Controls.Add(this.zedGraphControl);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 38);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 36);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.layoutControlGroup1;
-            this.layoutControl1.Size = new System.Drawing.Size(1067, 482);
+            this.layoutControl1.Size = new System.Drawing.Size(1067, 487);
             this.layoutControl1.TabIndex = 5;
             this.layoutControl1.Text = "layoutControl1";
+            // 
+            // zedGraphControl1
+            // 
+            this.zedGraphControl1.Location = new System.Drawing.Point(12, 245);
+            this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(5);
+            this.zedGraphControl1.Name = "zedGraphControl1";
+            this.zedGraphControl1.ScrollGrace = 0D;
+            this.zedGraphControl1.ScrollMaxX = 0D;
+            this.zedGraphControl1.ScrollMaxY = 0D;
+            this.zedGraphControl1.ScrollMaxY2 = 0D;
+            this.zedGraphControl1.ScrollMinX = 0D;
+            this.zedGraphControl1.ScrollMinY = 0D;
+            this.zedGraphControl1.ScrollMinY2 = 0D;
+            this.zedGraphControl1.Size = new System.Drawing.Size(1043, 230);
+            this.zedGraphControl1.TabIndex = 4;
             // 
             // layoutControlGroup1
             // 
@@ -192,7 +213,7 @@
             this.layoutControlGroup1.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
             rowDefinition1,
             rowDefinition2});
-            this.layoutControlGroup1.Size = new System.Drawing.Size(1067, 482);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(1067, 487);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem1
@@ -200,34 +221,31 @@
             this.layoutControlItem1.Control = this.zedGraphControl;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(1041, 228);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1047, 233);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
-            // 
-            // zedGraphControl1
-            // 
-            this.zedGraphControl1.Location = new System.Drawing.Point(16, 244);
-            this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(5);
-            this.zedGraphControl1.Name = "zedGraphControl1";
-            this.zedGraphControl1.ScrollGrace = 0D;
-            this.zedGraphControl1.ScrollMaxX = 0D;
-            this.zedGraphControl1.ScrollMaxY = 0D;
-            this.zedGraphControl1.ScrollMaxY2 = 0D;
-            this.zedGraphControl1.ScrollMinX = 0D;
-            this.zedGraphControl1.ScrollMinY = 0D;
-            this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(1035, 222);
-            this.zedGraphControl1.TabIndex = 4;
             // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.zedGraphControl1;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 228);
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 233);
             this.layoutControlItem2.Name = "layoutControlItem2";
             this.layoutControlItem2.OptionsTableLayoutItem.RowIndex = 1;
-            this.layoutControlItem2.Size = new System.Drawing.Size(1041, 228);
+            this.layoutControlItem2.Size = new System.Drawing.Size(1047, 234);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
+            // 
+            // barStaticItem2
+            // 
+            this.barStaticItem2.Caption = "Dmax:";
+            this.barStaticItem2.Id = 2;
+            this.barStaticItem2.Name = "barStaticItem2";
+            // 
+            // barStaticItem3
+            // 
+            this.barStaticItem3.Caption = "Dn:";
+            this.barStaticItem3.Id = 3;
+            this.barStaticItem3.Name = "barStaticItem3";
             // 
             // SingleForm
             // 
@@ -239,7 +257,7 @@
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SingleForm";
             this.Text = "GraphBuilder";
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
@@ -270,6 +288,8 @@
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem2;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem3;
     }
 }
 
